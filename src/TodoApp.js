@@ -11,24 +11,29 @@ export class TodoApp extends React.Component {
     };
   }
   render() {
+    const { todos } = this.state;
     return (
       <div>
         <h2>TodoApp</h2>
         <AddTodo addTodo={this.addTodo} />
-        <List deleteTod={this.deleteTodo} todos={this.state.todos} />
+        <List deleteTodo={this.deleteTodo} todos={todos} />
       </div>
     );
   }
-
+  //state変更系は一番上に持っておいて下で子要素に渡して実行する
   addTodo = title => {
+    const { todos, nextId } = this.state;
+
     this.setState({
-      todos: [...this.state.todos, { id: this.state.nextId + 1, title: title }],
-      nextId: this.state.nextId + 1
+      todos: [...todos, { id: nextId + 1, title: title }],
+      nextId: nextId + 1
     });
   };
   deleteTodo = id => {
+    const { todos } = this.state;
+
     this.setState({
-      todos: this.state.todos.filter(todo => {
+      todos: todos.filter(todo => {
         return todo.id !== id;
       })
     });
